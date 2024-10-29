@@ -1,0 +1,101 @@
+{
+	"landingPage": "/wp-admin/nav-menus.php",
+	"preferredVersions": {
+		"php": "8.0",
+		"wp": "latest"
+	},
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		},
+		{"step": "wp-cli","command": "wp term create category 'Programming' --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Food' --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Beverages' --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Assembly' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'C#' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Go' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Java' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'JavaScript' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Kotlin' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'PHP' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Python' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'R' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Ruby' --parent=2 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Fruits' --parent=3 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Vegetables' --parent=3 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Hot Beverages' --parent=4 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Cold Beverages' --parent=4 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Alcoholic Beverages' --parent=4 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Apple' --parent=15 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Banana' --parent=15 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Orange' --parent=15 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Carrot' --parent=16 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Tomato' --parent=16 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Spinach' --parent=16 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Coffee' --parent=17 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Tea' --parent=17 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Hot Chocolate' --parent=17 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Soda' --parent=18 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Iced Tea' --parent=18 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Lemonade' --parent=18 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Ayran' --parent=18 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Beer' --parent=19 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Wine' --parent=19 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Whiskey' --parent=19 --porcelain"},
+		{"step": "wp-cli","command": "wp term create category 'Raki' --parent=19 --porcelain"},
+		{
+			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "wordpress.org/plugins",
+				"slug": "automatically-hierarchic-categories-in-menu"
+			},
+			"options": {
+				"activate": true
+			}
+		},
+		{
+			"step": "installTheme",
+			"themeZipFile": {
+				"resource": "wordpress.org/themes",
+				"slug": "popularfx"
+			},
+			"options": {
+				"activate": true
+			}
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "Test Site",
+				"blogdescription": "by Atakan Au"
+			}
+		},
+		{
+			"step": "updateUserMeta",
+			"meta": {
+				"first_name": "Atakan",
+				"last_name": "Au",
+				"display_name": "Atakan Au"
+			},
+			"userId": 1
+		},
+		{"step": "wp-cli","command": "wp menu create 'Primary Menu'"},
+		{"step": "wp-cli","command": "wp menu location assign primary-menu primary"},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once 'wordpress/wp-load.php'; update_user_meta(1, 'metaboxhidden_nav-menus', 'a:1:{i:0;s:12:\"add-post_tag\";}'); update_user_meta(1, 'managenav-menuscolumnshidden', 'a:4:{i:0;s:11:\"link-target\";i:1;s:15:\"title-attribute\";i:2;s:11:\"css-classes\";i:3;s:3:\"xfn\";}'); ?>"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once 'wordpress/wp-load.php'; global $wpdb; $menu_item_data = array('menu-item-object'=>'post','menu-item-object-id'=>1,'menu-item-name'=>'sample-shortcode','menu-item-status'=>'publish','menu-item-parent-id'=>0,'menu-item-position'=>1,'menu-item-title'=>'Sample Shortcode','menu-item-description'=>'[autocategorymenu hide_empty=\"0\" level=\"3\"]');$menu_item_id = wp_update_nav_menu_item(0, 0, $menu_item_data);update_post_meta($menu_item_id,'_menu_item_type','aau_ahcm');update_post_meta($menu_item_id,'_menu_item_menu_item_parent',0);update_post_meta($menu_item_id,'_menu_item_object_id',37);update_post_meta($menu_item_id,'_menu_item_object','aau_ahcm');update_post_meta($menu_item_id,'_menu_item_target','');update_post_meta($menu_item_id,'_menu_item_classes','a:1:{i:0;s:0:\"\";}');update_post_meta($menu_item_id,'_menu_item_xfn','');update_post_meta($menu_item_id,'_menu_item_url','');$wpdb->insert($wpdb->prefix.'term_relationships',array('object_id' =>$menu_item_id,'term_taxonomy_id'=>37,'term_order'=>0)); $wpdb->update($wpdb->prefix.'term_taxonomy',['count'=>1],['taxonomy'=>'nav_menu']);?>"
+		},
+		{"step": "wp-cli","command": "wp menu item add-custom primary-menu \"Docs\" \"https:\/\/atakanau.blogspot.com\""},
+		{"step": "wp-cli","command": "wp menu item add-post primary-menu 1 --title=\"Default Post\" --parent-id=5"},
+		{"step": "wp-cli","command": "wp menu item add-post primary-menu 2 --title=\"Default Page\" --parent-id=5"}
+	]
+}
