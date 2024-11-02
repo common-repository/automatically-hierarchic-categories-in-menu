@@ -4,7 +4,7 @@ Author link: https://atakanau.blogspot.com
 Tags: category menu, menu, navigation, woocommerce category, woocommerce menu
 Requires at least: 5.0.2
 Requires PHP: 5.6
-Tested up to: 6.6
+Tested up to: 6.7
 Stable tag: 2.0.7
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0-standalone.html
